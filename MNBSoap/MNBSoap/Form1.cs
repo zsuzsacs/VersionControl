@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml;
 
 namespace MNBSoap
@@ -23,7 +24,24 @@ namespace MNBSoap
             InitializeComponent();
             Consume();
             LoadXml();
-            dataGridView1.DataSource = Rates;  
+            dataGridView1.DataSource = Rates;
+            chartRateData.DataSource = Rates;
+            Charting();
+        }
+
+        private void Charting()
+        {
+            Series series = chartRateData.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Date";
+            series.YValueMembers = "Value";
+            series.BorderWidth = 2;
+            var chartArea = chartRateData.ChartAreas[0];
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = false;
+            chartArea.AxisY.IsStartedFromZero = false;
+            var legend = chartRateData.Legends[0];
+            
         }
 
         private void LoadXml(string input)
