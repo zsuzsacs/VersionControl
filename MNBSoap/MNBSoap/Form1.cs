@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace MNBSoap
 {
@@ -21,7 +22,28 @@ namespace MNBSoap
         {
             InitializeComponent();
             Consume();
+            LoadXml();
             dataGridView1.DataSource = Rates;  
+        }
+
+        private void LoadXml(string input)
+        {
+            var xml = new XmlDocument();
+            xml.LoadXml(input);
+            foreach (XmlElement  element in xml.DocumentElement )
+            {
+                RateData r = new RateData();
+                r.Date = DateTime.Parse(element.GetAttribute("date"));
+                XmlElement child = (XmlElement)element.FirstChild;
+                r.Currency = child.GetAttribute("curr");
+                r.Value = decimal.Parse(child.InnerText);
+                int unit = int.Parse(child.GetAttribute("unit"));
+                if (unit != 0)
+                    r.Value = r.Value / unit;
+                 Rates.Add(r);
+
+                
+            }
         }
 
         void Consume()
