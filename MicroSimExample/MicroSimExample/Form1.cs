@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MicroSimExample.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,14 @@ namespace MicroSimExample
 {
     public partial class Form1 : Form
     {
+        List<Person> Population = new List<Person>();
+        List<> Population = new List<Person>();
+        List<Person> Population = new List<Person>();
         public Form1()
         {
             InitializeComponent();
+            Population = GetPopulaton();
+
         }
     }
 }
